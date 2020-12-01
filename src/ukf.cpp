@@ -11,7 +11,7 @@ using Eigen::VectorXd;
 UKF::UKF() {
     // if this is false,  measurements will be ignored (except during init)
     use_laser_ = true;
-    use_radar_ = false;
+    use_radar_ = true;
 
     x_ = VectorXd(5);  // initial state vector
 
@@ -64,7 +64,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package)
     if (!is_initialized_)
     {
         std::cout<<" ************** Initialize a initial state  ************** " <<std::endl;
-        //Initialization(meas_package);
+        Initialization(meas_package);
     }
 
     double delta_t = (meas_package.timestamp_ - time_us_) / 1000000.0;
@@ -225,13 +225,14 @@ void UKF::UpdateLidar(MeasurementPackage meas_package)
 }
 
 void UKF::UpdateRadar(MeasurementPackage meas_package) {
-    MatrixXd Zsig = MatrixXd(n_z, 2 * n_aug + 1).setZero();  /// (3*15)
 
+
+    n_z = 3;
     Eigen::VectorXd z;
     switch (meas_package.sensor_type_)
     {
         case MeasurementPackage::RADAR:
-            n_z = 3;
+
             z = Eigen::VectorXd(n_z).setZero();
             z = meas_package.raw_measurements_;
 
@@ -245,10 +246,13 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
 
     // measurement covariance matrix S
     MatrixXd S = MatrixXd(n_z,n_z).setZero();
+    std::cout<< " I was here in radar update"<<std::endl;
+
+    MatrixXd Zsig = MatrixXd(n_z, 2 * n_aug + 1).setZero();  /// (3*15)
+
 
     for (int i =0 ; i<2 * n_aug + 1 ;i++)
     {
-
         /// State Vector for simplicity
         double p_x = Xsig_pred.col(i)[0];
         double p_y = Xsig_pred.col(i)[1];
@@ -256,10 +260,13 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
         double phi = Xsig_pred.col(i)[3];
         double phi_d = Xsig_pred.col(i)[4];
 
+
         /// Radar Measurement Vector
         double rho     = sqrt(pow(p_x,2)+pow(p_y,2));
         double phi_rdr = atan2(p_y,p_x);
         double rho_d   = (p_x*cos(phi)*v + p_y*sin(phi)*v)/rho;
+
+        //std::cout<<rho <<" " << phi_rdr <<" " << rho_d<<std::endl;
 
         /// Put back into Zsig Matrix
         Zsig(0,i) = rho;
