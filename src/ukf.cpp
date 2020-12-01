@@ -225,8 +225,20 @@ void UKF::UpdateLidar(MeasurementPackage meas_package)
 }
 
 void UKF::UpdateRadar(MeasurementPackage meas_package) {
-    n_z = 3;
     MatrixXd Zsig = MatrixXd(n_z, 2 * n_aug + 1).setZero();  /// (3*15)
+
+    Eigen::VectorXd z;
+    switch (meas_package.sensor_type_)
+    {
+        case MeasurementPackage::RADAR:
+            n_z = 3;
+            z = Eigen::VectorXd(n_z).setZero();
+            z = meas_package.raw_measurements_;
+
+            // meas_package.raw_measurements_[0],   // rho in m
+            // meas_package.raw_measurements_[1],   // phi in rad
+            // meas_package.raw_measurements_[2];   // rho_dot in m/s
+    }
 
     // mean predicted measurement
     VectorXd z_pred = VectorXd(n_z).setZero();
@@ -285,19 +297,6 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
 
     for (int i = 1; i < 2 * n_aug + 1; i++)
         weights(i) = 1/(2*(lambda+n_aug));
-
-
-    VectorXd z = VectorXd(n_z).setZero();
-
-    switch (meas_package.sensor_type_)
-    {
-        case MeasurementPackage::RADAR:
-            z = meas_package.raw_measurements_;
-            // meas_package.raw_measurements_[0],   // rho in m
-            // meas_package.raw_measurements_[1],   // phi in rad
-            // meas_package.raw_measurements_[2];   // rho_dot in m/s
-    }
-
 
 
     /// create matrix for cross correlation Tc
