@@ -51,14 +51,9 @@ UKF::UKF()
     /*** _______Predict Sigma Points_______ ***/
     Xsig_pred = MatrixXd(n_x, 2 * n_aug + 1);
 
-    // define spreading parameter
-    lambda = 3 - n_aug;
-
     /***_______ Predict Mean and Covariance _________ ***/
     weights = VectorXd(2 * n_aug + 1);
-    weights(0) = lambda / (lambda + n_aug);
-    for (int i = 1; i < 2 * n_aug + 1; ++i)
-        weights(i) = 1 / (2 * (lambda + n_aug));
+
 }
 
 UKF::~UKF() {}
@@ -115,6 +110,8 @@ void UKF::Prediction(double delta_t)
 
 void UKF::UpdateLidar(MeasurementPackage meas_package)
 {
+    /// Define spreading parameter
+    lambda = 3 - n_aug;
     n_z = 2;
     Eigen::VectorXd z = Eigen::VectorXd(n_z);
     // switch (meas_package.sensor_type_)
@@ -233,6 +230,9 @@ void UKF::UpdateLidar(MeasurementPackage meas_package)
 
 void UKF::UpdateRadar(MeasurementPackage meas_package)
 {
+
+    /// Define spreading parameter
+    lambda = 3 - n_aug;
 
     n_z = 3;
     Eigen::VectorXd z =Eigen::VectorXd(n_z);
@@ -416,6 +416,8 @@ void UKF::GenerateSigmaPoints(Eigen::MatrixXd *Xsig_out)
               << P_ << std::endl;
 
     Xsig.col(0) = x_;
+    // define spreading parameter
+    lambda = 3 - n_x;
 
     for (int i = 0; i < n_x; i++)
     {
@@ -435,7 +437,11 @@ void UKF::AugmentedSigmaPoints(Eigen::MatrixXd *Xsig_out)
     // Process noise standard deviation longitudinal acceleration (std_a_) in m/s^2
     // Process noise standard deviation yaw acceleration (std_yawdd_) in rad/s^2
 
+    /// define spreading parameter
+    lambda = 3 - n_aug;
+
     /// create augmented mean vector
+
     VectorXd x_aug_ = VectorXd(n_aug);
 
     /// create augmented state covariance
@@ -527,6 +533,11 @@ void UKF::SigmaPointPrediction(Eigen::MatrixXd *Xsig_out)
 
 void UKF::PredictMeanAndCovariance(Eigen::VectorXd *x_pred, Eigen::MatrixXd *P_pred)
 {
+    lambda = 3 - n_aug;
+
+    weights(0) = lambda / (lambda + n_aug);
+    for (int i = 1; i < 2 * n_aug + 1; ++i)
+        weights(i) = 1 / (2 * (lambda + n_aug));
 
     // Predicted State Covariance Matrix;
     for (int i = 0; i < 2 * n_aug + 1; ++i)
