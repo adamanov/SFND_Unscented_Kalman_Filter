@@ -20,9 +20,9 @@ UKF::UKF()
     P_.setIdentity();
     P_(0, 0) = 1;
     P_(1, 1) = 1;
-    P_(2, 2) = 1000;
-    P_(3, 3) = 1000;
-    P_(4, 4) = 1000;
+    P_(2, 2) = 0.5;
+    P_(3, 3) = 0.5;
+    P_(4, 4) = 0.5;
 
     std_a_ = 5.0;     // Process noise standard deviation longitudinal acceleration in m/s^2
     std_yawdd_ = 0.8; // Process noise standard deviation yaw acceleration in rad/s^2
@@ -539,31 +539,31 @@ void UKF::PredictMeanAndCovariance(Eigen::VectorXd *x_pred, Eigen::MatrixXd *P_p
     for (int i = 1; i < 2 * n_aug + 1; ++i)
         weights(i) = 1 / (2 * (lambda + n_aug));
 
-    // Predicted State Covariance Matrix;
+    // Predict State Mean
+    VectorXd x = VectorXd(n_x).setZero();
     for (int i = 0; i < 2 * n_aug + 1; ++i)
+        x = x + weights(i)*Xsig_pred.col(i);
+
+    // Predicted State Covariance Matrix;
+    MatrixXd P = MatrixXd(n_x,n_x).setZero();
+    for (int i =0 ; i<2 * n_aug + 1; ++i)
     {
         // State Difference
-        VectorXd xDiff = Xsig_pred.col(i) - x_;
+        VectorXd xDiff = Xsig_pred.col(i) - x;
 
         // angle normalization
         /* the state contains an angle. As you have learned before, subtracting angles is a problem for Kalman filters,
          * because the result might be 2π plus a small angle, instead of just a small angle.
          */
 
-        while (xDiff(3) > M_PI)
-            xDiff(3) -= 2. * M_PI;
-        while (xDiff(3) < -M_PI)
-            xDiff(3) += 2. * M_PI;
+        while (xDiff(3)> M_PI) xDiff(3)-=2.*M_PI;
+        while (xDiff(3)<-M_PI) xDiff(3)+=2.*M_PI;
 
         // Predicted Covariance
-        P_ = P_ + weights(i) * xDiff * xDiff.transpose();
-
-        // std::cout << "P_ = " << std::endl << P_ << std::endl;
+        P = P + weights(i) * xDiff * xDiff.transpose() ;
     }
-    std::cout << "x_ = " << std::endl
-              << x_ << std::endl;
-    std::cout << "P_ = " << std::endl
-              << P_ << std::endl;
+    std::cout << "x_ = " << std::endl << x_ << std::endl;
+    std::cout << "P_ = " << std::endl << P_ << std::endl;
 
     *x_pred = x_;
     *P_pred = P_;
