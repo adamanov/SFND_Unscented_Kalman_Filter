@@ -20,9 +20,9 @@ UKF::UKF()
     P_.setIdentity();
     P_(0, 0) = 1;
     P_(1, 1) = 1;
-    P_(2, 2) = 0.5;
-    P_(3, 3) = 0.5;
-    P_(4, 4) = 0.5;
+    P_(2, 2) = 1000;
+    P_(3, 3) = 1000;
+    P_(4, 4) = 1000;
 
     std_a_ = 5.0;     // Process noise standard deviation longitudinal acceleration in m/s^2
     std_yawdd_ = 0.8; // Process noise standard deviation yaw acceleration in rad/s^2
@@ -115,9 +115,8 @@ void UKF::Prediction(double delta_t)
 
 void UKF::UpdateLidar(MeasurementPackage meas_package)
 {
-    Eigen::VectorXd z;
     n_z = 2;
-
+    Eigen::VectorXd z = Eigen::VectorXd(n_z);
     // switch (meas_package.sensor_type_)
     // {
     // case MeasurementPackage::LASER:
@@ -131,7 +130,6 @@ void UKF::UpdateLidar(MeasurementPackage meas_package)
     //     }
     // }
 
-    z = Eigen::VectorXd(n_z);
     z = meas_package.raw_measurements_;
     MatrixXd Zsig = MatrixXd(n_z, 2 * n_aug + 1).setZero(); /// (3*15)
 
@@ -237,7 +235,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package)
 {
 
     n_z = 3;
-    Eigen::VectorXd z;
+    Eigen::VectorXd z =Eigen::VectorXd(n_z);
 //switch (meas_package.sensor_type_)
 //{
 //case MeasurementPackage::RADAR:
@@ -248,9 +246,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package)
 //    // meas_package.raw_measurements_[1],   // phi in rad
 //    // meas_package.raw_measurements_[2];   // rho_dot in m/s
 //}
-
-    z = Eigen::VectorXd(n_z).setZero();
-    z = meas_package.raw_measurements_;
+ z = meas_package.raw_measurements_;
 
     // mean predicted measurement
     VectorXd z_pred = VectorXd(n_z).setZero();
@@ -305,11 +301,6 @@ void UKF::UpdateRadar(MeasurementPackage meas_package)
 
     S = S + R;
 
-    VectorXd weights = VectorXd(2 * n_aug + 1); /// (15x1)
-    weights(0) = lambda / (lambda + n_aug);
-
-    for (int i = 1; i < 2 * n_aug + 1; i++)
-        weights(i) = 1 / (2 * (lambda + n_aug));
 
     /// create matrix for cross correlation Tc
     MatrixXd Tc = MatrixXd(n_x, n_z).setZero();
