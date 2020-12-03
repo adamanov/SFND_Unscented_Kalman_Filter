@@ -71,13 +71,7 @@ and performing clustering. This is similar to what was done in Sensor Fusion Lid
 
 ## Project Instructions and [Rubric](https://review.udacity.com/#!/rubrics/2551/view)
 
-<<<<<<< HEAD
-This information is only accessible by people who are already enrolled in Sensor Fusion. 
-If you are enrolled, see the project page in the classroom
-for instructions and the project rubric.
-# [SFND_Unscented_Kalman_Filter](https://review.udacity.com/#!/rubrics/2551/view)
-=======
-# SFND Unscented Kalman Filter
+# SFND_Unscented_Kalman_Filter
 ## Advance Learning Tips
 - [Applying the unscented Kalman filter for nonlinear state estimation](https://www.sciencedirect.com/science/article/pii/S0959152407001655)
 - [Uncented Kalman Filter for Dummies](https://robotics.stackexchange.com/questions/9233/unscented-kalman-filter-for-dummies)
