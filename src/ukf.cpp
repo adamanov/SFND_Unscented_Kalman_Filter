@@ -23,16 +23,16 @@ UKF::UKF()
     P_.setIdentity();
     //  We are relatively certain in the x and y values because both measurement types
     //  give us some relatively accurate value
-    P_(0, 0) = 1;
-    P_(1, 1) = 1;
+    P_(0, 0) = 0.2;
+    P_(1, 1) = 0.2;
     // Because the first measurement can be RADAR measurement and in the case of radar measurement we do not really
     // know the exact velocity vector (vx,vy),
-    P_(2, 2) = 0.5;
-    P_(3, 3) = 0.5;
-    P_(4, 4) = 0.5;
+    P_(2, 2) = 0.3;
+    P_(3, 3) = 0.3;
+    P_(4, 4) = 0.3;
 
-    std_a_ = 1.0;     // Process noise standard deviation longitudinal acceleration in m/s^2
-    std_yawdd_ = 0.8; // Process noise standard deviation yaw acceleration in rad/s^2
+    std_a_ = 0.6;     // Process noise standard deviation longitudinal acceleration in m/s^2
+    std_yawdd_ = 0.6; // Process noise standard deviation yaw acceleration in rad/s^2
 
     /**
      * DO NOT MODIFY measurement noise values below.
@@ -60,6 +60,7 @@ UKF::UKF()
 
     /***_______ Predict Mean and Covariance _________ ***/
     weights = VectorXd(2 * n_aug + 1);
+
 
 }
 
@@ -185,7 +186,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package)
     VectorXd weights = VectorXd(2 * n_aug + 1); /// (15x1)
     weights(0) = lambda / (lambda + n_aug);
 
-    for (int i = 1; i < 2 * n_aug + 1; i++)
+    for (int i = 0; i < 2 * n_aug + 1; i++)
         weights(i) = 1 / (2 * (lambda + n_aug));
 
     /// create matrix for cross correlation Tc
@@ -414,7 +415,7 @@ void UKF::GenerateSigmaPoints(Eigen::MatrixXd *Xsig_out)
 
     Xsig.col(0) = x_;
     // define spreading parameter
-    lambda = 3 - n_x;
+    lambda = 3 - n_aug;
 
     for (int i = 0; i < n_x; i++)
     {
@@ -443,12 +444,13 @@ void UKF::AugmentedSigmaPoints(Eigen::MatrixXd *Xsig_out)
     MatrixXd P_aug = MatrixXd(n_aug, n_aug); /// (7x7)
 
     /// create augmented mean state
-    x_aug_(6) = 0;
     x_aug_.head(5) = x_;
     x_aug_(5) = 0;
+    x_aug_(6) = 0;
+
 
     /// create augmented covariance matrix
-    P_aug.setZero(); /// P_aug.fill(0.0);
+    P_aug.fill(0.0); /// P_aug.fill(0.0);
 
     P_aug.topLeftCorner(5, 5) = P_;
     P_aug(5, 5) = std_a_ * std_a_;
@@ -477,12 +479,12 @@ void UKF::SigmaPointPrediction(Eigen::MatrixXd *Xsig_out)
     for (int i = 0; i < 2 * n_aug + 1; ++i)
     {
         // extract values for better readability
-        double p_x = Xsig_aug(0, i);
-        double p_y = Xsig_aug(1, i);
-        double v = Xsig_aug(2, i);
-        double yaw = Xsig_aug(3, i);
-        double yawd = Xsig_aug(4, i);
-        double nu_a = Xsig_aug(5, i);
+        double p_x =      Xsig_aug(0, i);
+        double p_y =      Xsig_aug(1, i);
+        double v =        Xsig_aug(2, i);
+        double yaw =      Xsig_aug(3, i);
+        double yawd =     Xsig_aug(4, i);
+        double nu_a =     Xsig_aug(5, i);
         double nu_yawdd = Xsig_aug(6, i);
 
         // predicted state values
@@ -533,16 +535,16 @@ void UKF::PredictMeanAndCovariance(Eigen::VectorXd *x_pred, Eigen::MatrixXd *P_p
         weights(i) = 0.5 /  (lambda + n_aug);
 
     // Predict State Mean
-    VectorXd x_mean = VectorXd(n_x).setZero();
+    VectorXd x_ = VectorXd(n_x).setZero();
     for (int i = 0; i < 2 * n_aug + 1; ++i)
-        x_mean = x_mean + weights(i)*Xsig_pred.col(i);
+        x_ = x_ + weights(i)*Xsig_pred.col(i);
 
     // Predicted State Covariance Matrix;
     MatrixXd P = MatrixXd(n_x,n_x).setZero();
     for (int i =0 ; i<2 * n_aug + 1; ++i)
     {
         // State Difference
-        VectorXd xDiff = Xsig_pred.col(i) - x_mean;
+        VectorXd xDiff = Xsig_pred.col(i) - x_;
 
         // angle normalization
         /* the state contains an angle. As you have learned before, subtracting angles is a problem for Kalman filters,
