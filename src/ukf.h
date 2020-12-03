@@ -45,9 +45,6 @@ public:
     // state covariance matrix
     Eigen::MatrixXd P_;
 
-    // augmented state covariance matrix
-    Eigen::MatrixXd P_aug;
-
     // Generate A Sigma Point
     Eigen::MatrixXd Xsig;
 
