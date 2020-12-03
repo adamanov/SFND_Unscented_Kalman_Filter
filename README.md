@@ -78,13 +78,13 @@ for instructions and the project rubric.
 
 # SFND_Unscented_Kalman_Filter
 
-[Applying the unscented Kalman filter for nonlinear state estimation](https://www.sciencedirect.com/science/article/pii/S0959152407001655)
-[Uncented Kalman Filter for Dummies](https://robotics.stackexchange.com/questions/9233/unscented-kalman-filter-for-dummies)
-[Learning the Unscented Kalman Filter](https://www.mathworks.com/matlabcentral/fileexchange/18217-learning-the-unscented-kalman-filter?w.mathworks.com)
-[Introduction to Unscented Kalman Filter](http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL_COPIES/AV0809/qi.pdf)
-[Unscented Kalman Filter Tutorial](https://www.cse.sc.edu/~terejanu/files/tutorialUKF.pdf)
-[KF, EKF and UKF](http://ais.informatik.uni-freiburg.de/teaching/ws12/mapping/pdf/slam05-ukf.pdf)
-[Application of Unscented Kalman Filter to a cable driven surgical robot](https://ieeexplore.ieee.org/document/6224776)
+- [Applying the unscented Kalman filter for nonlinear state estimation](https://www.sciencedirect.com/science/article/pii/S0959152407001655)
+- [Uncented Kalman Filter for Dummies](https://robotics.stackexchange.com/questions/9233/unscented-kalman-filter-for-dummies)
+- [Learning the Unscented Kalman Filter](https://www.mathworks.com/matlabcentral/fileexchange/18217-learning-the-unscented-kalman-filter?w.mathworks.com)
+- [Introduction to Unscented Kalman Filter](http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL_COPIES/AV0809/qi.pdf)
+- [Unscented Kalman Filter Tutorial](https://www.cse.sc.edu/~terejanu/files/tutorialUKF.pdf)
+- [KF, EKF and UKF](http://ais.informatik.uni-freiburg.de/teaching/ws12/mapping/pdf/slam05-ukf.pdf)
+- [Application of Unscented Kalman Filter to a cable driven surgical robot](https://ieeexplore.ieee.org/document/6224776)
 
 
 # Advance Learning Tips
@@ -110,5 +110,5 @@ Here are a few tips for improving on code efficiency and optimization:
 - [Efficient C++ Performance Programming Techniques](http://www.whigg.ac.cn/resource/program/CPP/201010/P020101023562491092566.pdf)
 
 # More about Kalman Filters
-[Kalman Filter, Extended Kalman Filter, Unscented Kalman Filter](https://medium.com/@kastsiukavets.alena/kalman-filter-extended-kalman-filter-unscented-kalman-filter-dbbd929f83c5)
-[USDC Extended Kalman Filters — my bits](https://tempflip.medium.com/udacity-self-driving-cars-extended-kalman-filters-my-bits-99cbbaf65e3d)
+- [Kalman Filter, Extended Kalman Filter, Unscented Kalman Filter](https://medium.com/@kastsiukavets.alena/kalman-filter-extended-kalman-filter-unscented-kalman-filter-dbbd929f83c5)
+- [USDC Extended Kalman Filters — my bits](https://tempflip.medium.com/udacity-self-driving-cars-extended-kalman-filters-my-bits-99cbbaf65e3d)
