@@ -72,7 +72,7 @@ and performing clustering. This is similar to what was done in Sensor Fusion Lid
 ## Project Instructions and [Rubric](https://review.udacity.com/#!/rubrics/2551/view)
 
 # SFND Unscented Kalman Filter
-
+## Advance Learning Tips
 - [Applying the unscented Kalman filter for nonlinear state estimation](https://www.sciencedirect.com/science/article/pii/S0959152407001655)
 - [Uncented Kalman Filter for Dummies](https://robotics.stackexchange.com/questions/9233/unscented-kalman-filter-for-dummies)
 - [Learning the Unscented Kalman Filter](https://www.mathworks.com/matlabcentral/fileexchange/18217-learning-the-unscented-kalman-filter?w.mathworks.com)
@@ -82,15 +82,15 @@ and performing clustering. This is similar to what was done in Sensor Fusion Lid
 - [Application of Unscented Kalman Filter to a cable driven surgical robot](https://ieeexplore.ieee.org/document/6224776)
 
 
-# Advance Learning Tips
+## Advance Learning Tips
 
 Below are some resources of strategies and techniques for Debugging Lots of C++ Objects effectively.
 
-[Debugging Strategies, Tips, and Gotchas](https://www.cprogramming.com/debugging/debugging_strategy.html)
-[Techniques for Debugging in C++](https://accu.org/journals/overload/9/46/goodliffe_423/)
-[Some favorite debugging techniques in C++ as discussed on stack overflow](https://stackoverflow.com/questions/1325853/what-are-your-favorite-debugging-techniques-in-c)
+- [Debugging Strategies, Tips, and Gotchas](https://www.cprogramming.com/debugging/debugging_strategy.html)
+- [Techniques for Debugging in C++](https://accu.org/journals/overload/9/46/goodliffe_423/)
+- [Some favorite debugging techniques in C++ as discussed on stack overflow](https://stackoverflow.com/questions/1325853/what-are-your-favorite-debugging-techniques-in-c)
 
-# Code Efficiency 
+## Code Efficiency 
 
 Here are a few tips for improving on code efficiency and optimization:
 
@@ -104,6 +104,6 @@ Here are a few tips for improving on code efficiency and optimization:
 - [Optimizing C++/Writing efficient code/Performance improving features.](https://en.wikibooks.org/wiki/Optimizing_C%2B%2B/Writing_efficient_code/Performance_improving_features)
 - [Efficient C++ Performance Programming Techniques](http://www.whigg.ac.cn/resource/program/CPP/201010/P020101023562491092566.pdf)
 
-# More about Kalman Filters
+## More about Kalman Filters
 - [Kalman Filter, Extended Kalman Filter, Unscented Kalman Filter](https://medium.com/@kastsiukavets.alena/kalman-filter-extended-kalman-filter-unscented-kalman-filter-dbbd929f83c5)
 - [USDC Extended Kalman Filters — my bits](https://tempflip.medium.com/udacity-self-driving-cars-extended-kalman-filters-my-bits-99cbbaf65e3d)
