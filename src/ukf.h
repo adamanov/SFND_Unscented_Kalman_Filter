@@ -87,6 +87,13 @@ public:
     //time diff in sec
     double delta_t;
 
+    // NIS values
+    // the current NIS for radar
+    double NIS_radar_;
+
+    // the current NIS for laser
+    double NIS_laser_ ;
+
     void Initialization(MeasurementPackage meas_package);
 
     void GenerateSigmaPoints(Eigen::MatrixXd* Xsig_out);
@@ -109,6 +116,7 @@ public:
                      Eigen::MatrixXd S_out,
                      Eigen::MatrixXd Zsig,
                      Eigen::VectorXd z);
+
 
 };
 

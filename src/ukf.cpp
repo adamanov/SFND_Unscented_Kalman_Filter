@@ -1,6 +1,7 @@
 #include "ukf.h"
 #include "Eigen/Dense"
 #include <iostream>
+#include <fstream>
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -23,16 +24,16 @@ UKF::UKF()
     P_.setIdentity();
     //  We are relatively certain in the x and y values because both measurement types
     //  give us some relatively accurate value
-    P_(0, 0) = 1;
-    P_(1, 1) = 1;
+    P_(0, 0) = 0.2;
+    P_(1, 1) = 0.2;
     // Because the first measurement can be RADAR measurement and in the case of radar measurement we do not really
     // know the exact velocity vector (vx,vy),
-    P_(2, 2) = 1;
-    P_(3, 3) = 0.225;
-    P_(4, 4) = 0.225;
+    P_(2, 2) = 0.3;
+    P_(3, 3) = 0.25;
+    P_(4, 4) = 0.25;
 
-    std_a_ = 1.2;     // Process noise standard deviation longitudinal acceleration in m/s^2
-    std_yawdd_ = 1.2; // Process noise standard deviation yaw acceleration in rad/s^2
+    std_a_ = 0.6;     //  Process noise standard deviation longitudinal acceleration in m/s^2
+    std_yawdd_ = 0.5 ; // Process noise standard deviation yaw acceleration in rad/s^2
 
     /**
      * DO NOT MODIFY measurement noise values below.
@@ -60,6 +61,12 @@ UKF::UKF()
 
     /***_______ Predict Mean and Covariance _________ ***/
     weights = VectorXd(2 * n_aug + 1);
+
+    // the current NIS for radar
+    NIS_radar_ = 0.0;
+
+    // the current NIS for laser
+    NIS_laser_ = 0.0;
 
 
 }
@@ -223,11 +230,20 @@ void UKF::UpdateLidar(MeasurementPackage meas_package)
 
     P_ = P_ - K * S * K.transpose();
 
+    //calculate NIS
+    NIS_laser_ = z_diff.transpose() * S.inverse() * z_diff;
+    std::cout << "\n current NIS Lidar Value: " << std::endl << NIS_laser_ << std::endl;
+
+    std::ofstream log("NIS_laser.txt", std::ios_base::app | std::ios_base::out);//creating a new text file
+    log << NIS_laser_; //add NIS calculated value
+    log << "\n";
+
     // print result
     std::cout << "\nUpdated state x =  " << std::endl
               << x_ << std::endl;
     std::cout << "\nUpdated state covariance P = " << std::endl
               << P_ << std::endl;
+
 }
 
 void UKF::UpdateRadar(MeasurementPackage meas_package)
@@ -344,6 +360,14 @@ void UKF::UpdateRadar(MeasurementPackage meas_package)
     x_ = x_ + K * z_diff;
 
     P_ = P_ - K * S * K.transpose();
+
+    //calculate NIS
+    NIS_radar_ = z_diff.transpose() * S.inverse() * z_diff;
+    std::cout << "\n current NIS Radar Value: " << std::endl << NIS_radar_ << std::endl;
+
+    std::ofstream log("NIS_radar.txt", std::ios_base::app | std::ios_base::out);//creating a new text file
+    log << NIS_radar_; //add NIS calculated value
+    log << "\n";
 
     // print result
     std::cout << "\nUpdated state x: " << std::endl << x_ << std::endl;
