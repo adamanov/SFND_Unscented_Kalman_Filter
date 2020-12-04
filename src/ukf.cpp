@@ -23,16 +23,16 @@ UKF::UKF()
     P_.setIdentity();
     //  We are relatively certain in the x and y values because both measurement types
     //  give us some relatively accurate value
-    P_(0, 0) = 0.2;
-    P_(1, 1) = 0.2;
+    P_(0, 0) = 1;
+    P_(1, 1) = 1;
     // Because the first measurement can be RADAR measurement and in the case of radar measurement we do not really
     // know the exact velocity vector (vx,vy),
-    P_(2, 2) = 0.3;
-    P_(3, 3) = 0.3;
-    P_(4, 4) = 0.3;
+    P_(2, 2) = 1;
+    P_(3, 3) = 0.225;
+    P_(4, 4) = 0.225;
 
-    std_a_ = 0.6;     // Process noise standard deviation longitudinal acceleration in m/s^2
-    std_yawdd_ = 0.6; // Process noise standard deviation yaw acceleration in rad/s^2
+    std_a_ = 1.2;     // Process noise standard deviation longitudinal acceleration in m/s^2
+    std_yawdd_ = 1.2; // Process noise standard deviation yaw acceleration in rad/s^2
 
     /**
      * DO NOT MODIFY measurement noise values below.
@@ -384,9 +384,14 @@ void UKF::Initialization(MeasurementPackage meas_package)
         double px = cos(phi_rd) * rho;
         double py = sin(phi_rd) * rho;
 
+        // Speed
+        double vx = rho_d * cos(phi_rd);
+        double vy = rho_d * sin(phi_rd);
+        double v = sqrt(vx*vx + vy*vy);
+
         x_ << px,
             py,
-            0,
+            v,
             0,
             0;
 

@@ -50,11 +50,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="/home/adamanov/Udacity_Sensor_Fusion/SFND_Unscented_Kalman_Filter" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -105,6 +100,8 @@
       <workItem from="1606939753763" duration="10454000" />
       <workItem from="1606984363886" duration="2754000" />
       <workItem from="1607015398227" duration="2107000" />
+      <workItem from="1607019319418" duration="287000" />
+      <workItem from="1607094076405" duration="330000" />
     </task>
     <servers />
   </component>
