@@ -8,7 +8,6 @@ In this project I implemented an Unscented Kalman Filter to estimate the state o
 
 ## Project Instructions and [Rubric](https://review.udacity.com/#!/rubrics/2551/view)
 
-# SFND_Unscented_Kalman_Filter
 ## Advance Learning Tips
 - [Applying the unscented Kalman filter for nonlinear state estimation](https://www.sciencedirect.com/science/article/pii/S0959152407001655)
 - [Uncented Kalman Filter for Dummies](https://robotics.stackexchange.com/questions/9233/unscented-kalman-filter-for-dummies)
@@ -50,7 +49,7 @@ Here are a few tips for improving on code efficiency and optimization:
 
 
 
-
+# SFND_Unscented_Kalman_Filter
 The main program can be built and ran by doing the following from the project top directory.
 
 1. mkdir build
