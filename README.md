@@ -16,7 +16,7 @@ In this project I implemented an Unscented Kalman Filter to estimate the state o
 - [Unscented Kalman Filter Tutorial](https://www.cse.sc.edu/~terejanu/files/tutorialUKF.pdf)
 - [KF, EKF and UKF](http://ais.informatik.uni-freiburg.de/teaching/ws12/mapping/pdf/slam05-ukf.pdf)
 - [Application of Unscented Kalman Filter to a cable driven surgical robot](https://ieeexplore.ieee.org/document/6224776)
-- [TheUnscentedKalmanFilterforNonlinearEstimatio](https://www.seas.harvard.edu/courses/cs281/papers/unscented.pdf)
+- [The Unscented Kalman Filter for Nonlinear Estimation](https://www.seas.harvard.edu/courses/cs281/papers/unscented.pdf)
 
 
 
